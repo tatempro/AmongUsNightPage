@@ -1,6 +1,7 @@
 import * as animations from './animations.js';
 import * as gallery from './gallery.js';
 import * as audio from './audio.js';
+import * as rsvp from './rsvp.js';
 
 const STORAGE_BOARDED = 'boarded';
 
@@ -93,6 +94,12 @@ function renderHero() {
       if (url) window.open(url, '_blank', 'noopener');
     });
   }
+  const rsvpBtn = document.getElementById('rsvp-button');
+  if (rsvpBtn) {
+    rsvpBtn.addEventListener('click', () => {
+      rsvp.openChooser(state.crew || []);
+    });
+  }
 }
 
 function escapeHtml(str) {
@@ -121,6 +128,23 @@ function renderRoster() {
       </button>
     </div>
   `;
+}
+
+function wireRosterClicks() {
+  const root = document.getElementById('roster');
+  if (!root) return;
+  root.addEventListener('click', (e) => {
+    const tile = e.target.closest('[data-crew-index]');
+    if (tile) {
+      const i = parseInt(tile.getAttribute('data-crew-index'), 10);
+      const c = state.crew && state.crew[i];
+      if (c) rsvp.confirmRsvp(c);
+      return;
+    }
+    if (e.target.closest('#crew-you')) {
+      rsvp.openGuestForm();
+    }
+  });
 }
 
 function renderDiscord() {
@@ -207,9 +231,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   animations.start();
   setupSplash();
   wireSfx();
+  rsvp.init({
+    onSubmit: ({ name, color }) => {
+      console.log('[rsvp] submit', { name, color });
+    }
+  });
   await loadAll();
   renderHero();
   renderRoster();
+  wireRosterClicks();
   renderDiscord();
   renderPastNights();
   gallery.mount(state.gallery);
