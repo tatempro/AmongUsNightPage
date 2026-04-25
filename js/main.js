@@ -188,9 +188,25 @@ function setupSplash() {
   });
 }
 
+function wireSfx() {
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target.closest('button, .crew-tile, .thumb, a');
+    if (!target) return;
+    if (target.dataset.sfxHover === 'wired') return;
+    target.dataset.sfxHover = 'wired';
+    target.addEventListener('mouseenter', () => audio.playSfx('hover'));
+  });
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('button, .crew-tile, .thumb');
+    if (!target) return;
+    audio.playSfx('click');
+  });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   animations.start();
   setupSplash();
+  wireSfx();
   await loadAll();
   renderHero();
   renderRoster();
