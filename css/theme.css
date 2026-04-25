@@ -210,3 +210,57 @@ button.btn-discord {
 .crew-tile.you .name {
   opacity: 0.6;
 }
+
+#discord, #past-nights {
+  border: 1px dashed var(--panel-border);
+  border-radius: 10px;
+  padding: 16px;
+  min-height: 110px;
+  background: var(--panel-bg);
+}
+
+#discord .server-name {
+  margin-top: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#discord .join-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--discord-blurple);
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#past-nights .thumbs {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+#past-nights .thumb {
+  width: 60px;
+  height: 42px;
+  border-radius: 4px;
+  border: 1px solid #353a5a;
+  background-color: #23284a;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+#past-nights .thumb:hover {
+  transform: scale(1.05);
+}
+
+#past-nights .empty {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+}

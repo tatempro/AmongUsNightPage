@@ -121,6 +121,45 @@ function renderRoster() {
   `;
 }
 
+function renderDiscord() {
+  const root = document.getElementById('discord');
+  if (!root) return;
+  const d = state.discord;
+  if (!d) {
+    root.innerHTML = '<div class="panel-label">DISCORD</div><div>—</div>';
+    return;
+  }
+  root.innerHTML = `
+    <div class="panel-label">DISCORD</div>
+    <div class="server-name">${escapeHtml(d.serverName || '')}</div>
+    <a class="join-link" href="${escapeHtml(d.inviteUrl || '#')}" target="_blank" rel="noopener">→ join the channel</a>
+  `;
+}
+
+function renderPastNights() {
+  const root = document.getElementById('past-nights');
+  if (!root) return;
+  const nights = Array.isArray(state.gallery) ? state.gallery : [];
+  if (nights.length === 0) {
+    root.innerHTML = `
+      <div class="panel-label">PAST NIGHTS</div>
+      <div class="empty">No past nights yet — first one's coming up.</div>
+    `;
+    return;
+  }
+  const recent = nights.slice(0, 4);
+  root.innerHTML = `
+    <div class="panel-label">PAST NIGHTS</div>
+    <div class="thumbs">
+      ${recent.map((n, i) => `
+        <div class="thumb" data-night-index="${i}"
+             style="${n.cover ? `background-image:url('${escapeHtml(n.cover)}')` : ''}"
+             title="${escapeHtml(n.title || n.date || '')}"></div>
+      `).join('')}
+    </div>
+  `;
+}
+
 function dismissSplash() {
   const splash = document.getElementById('splash');
   if (!splash || splash.classList.contains('fading')) return;
@@ -150,6 +189,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadAll();
   renderHero();
   renderRoster();
+  renderDiscord();
+  renderPastNights();
 });
 
 export { state };
