@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Among Us Night</title>
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/splash.css" />
+</head>
+<body>
+  <div id="bg-stars" aria-hidden="true">
+    <div class="stars stars-near"></div>
+    <div class="stars stars-mid"></div>
+    <div class="stars stars-far"></div>
+  </div>
+
+  <div id="bg-asteroids" aria-hidden="true"></div>
+  <div id="bg-crewmates" aria-hidden="true"></div>
+
+  <main id="app" hidden>
+    <section id="hero"></section>
+    <section id="roster"></section>
+    <div class="bottom-row">
+      <section id="discord"></section>
+      <section id="past-nights"></section>
+    </div>
+  </main>
+
+  <button id="mute-toggle" type="button" aria-label="Toggle audio" hidden>🔊</button>
+
+  <div id="splash" class="splash">
+    <div class="splash-text">⬡ TAP TO BOARD ⬡</div>
+  </div>
+
+  <div id="flash-overlay" aria-hidden="true"></div>
+  <div id="modal-root"></div>
+
+  <script src="vendor/howler.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

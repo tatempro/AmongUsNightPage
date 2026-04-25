@@ -1,0 +1,104 @@
+:root {
+  --space-deep: #0a0e1a;
+  --space-mid: #1a1f3a;
+  --panel-border: #4a5588;
+  --panel-bg: rgba(35, 40, 74, 0.4);
+  --text: #cdd6f4;
+  --text-dim: rgba(205, 214, 244, 0.6);
+  --accent-red: #ff4747;
+  --accent-blue: #5b8dff;
+  --discord-blurple: #5865f2;
+  --label-spacing: 3px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: linear-gradient(180deg, var(--space-deep) 0%, var(--space-mid) 100%);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+#app[hidden] { display: none; }
+
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+@media (max-width: 600px) {
+  .bottom-row { grid-template-columns: 1fr; }
+  #app { padding: 20px 12px 60px; }
+}
+
+.panel {
+  border: 1px dashed var(--panel-border);
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--panel-bg);
+}
+
+.panel-label {
+  font-size: 11px;
+  letter-spacing: var(--label-spacing);
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+button.btn {
+  font-family: inherit;
+  border: 0;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  background: var(--accent-red);
+  color: white;
+  box-shadow: 0 0 16px rgba(255, 71, 71, 0.5);
+}
+
+button.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.btn-discord {
+  background: var(--discord-blurple);
+  box-shadow: 0 0 12px rgba(88, 101, 242, 0.4);
+}
+
+#mute-toggle {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: 1px solid var(--panel-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+}
