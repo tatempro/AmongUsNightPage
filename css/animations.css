@@ -71,3 +71,25 @@
   from { transform: translate3d(110vw, 0, 0) rotate(0deg); }
   to   { transform: translate3d(-20vw, 0, 0) rotate(360deg); }
 }
+
+.crewmate-walker {
+  position: absolute;
+  width: 48px;
+  height: 60px;
+  background: url('../assets/crew/wanderer.svg') no-repeat center / contain;
+  animation: walk-across linear forwards;
+}
+
+.crewmate-walker.bob {
+  animation: walk-across linear forwards, crewmate-bob 0.5s ease-in-out infinite;
+}
+
+@keyframes walk-across {
+  from { transform: translate3d(110vw, 0, 0); }
+  to   { transform: translate3d(-20vw, 0, 0); }
+}
+
+@keyframes crewmate-bob {
+  0%, 100% { margin-top: 0; }
+  50%      { margin-top: -4px; }
+}

@@ -32,6 +32,32 @@ function scheduleAsteroid() {
   }, delay);
 }
 
+const CREWMATE_INTERVAL_MIN = 30000;
+const CREWMATE_INTERVAL_MAX = 60000;
+
+function spawnCrewmate() {
+  const container = document.getElementById('bg-crewmates');
+  if (!container) return;
+  const el = document.createElement('div');
+  el.className = 'crewmate-walker bob';
+  el.style.top = (20 + Math.random() * 60) + 'vh';
+  const duration = 22 + Math.random() * 12;
+  el.style.animationDuration = duration + 's, 0.5s';
+  el.addEventListener('animationend', (e) => {
+    if (e.animationName === 'walk-across') el.remove();
+  });
+  container.appendChild(el);
+}
+
+function scheduleCrewmate() {
+  const delay = CREWMATE_INTERVAL_MIN + Math.random() * (CREWMATE_INTERVAL_MAX - CREWMATE_INTERVAL_MIN);
+  setTimeout(() => {
+    spawnCrewmate();
+    scheduleCrewmate();
+  }, delay);
+}
+
 export function start() {
   scheduleAsteroid();
+  scheduleCrewmate();
 }
