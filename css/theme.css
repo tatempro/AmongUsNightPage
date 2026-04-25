@@ -102,3 +102,57 @@ button.btn-discord {
   font-size: 18px;
   cursor: pointer;
 }
+
+#hero .panel-hero {
+  text-align: center;
+  padding: 32px 20px;
+  border: 2px solid var(--accent-red);
+  border-radius: 14px;
+  background: rgba(255, 71, 71, 0.08);
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+#hero .corner-dots {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  opacity: 0.5;
+  letter-spacing: 4px;
+}
+
+#hero .transmission-label {
+  font-size: 13px;
+  opacity: 0.75;
+  letter-spacing: var(--label-spacing);
+}
+
+#hero .when {
+  font-size: clamp(28px, 5vw, 42px);
+  margin-top: 10px;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+#hero .episode-title {
+  margin-top: 6px;
+  opacity: 0.85;
+  font-size: 14px;
+}
+
+#hero .notes {
+  margin-top: 8px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+#hero .actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

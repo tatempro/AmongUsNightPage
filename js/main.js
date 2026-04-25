@@ -35,6 +35,70 @@ async function loadAll() {
   state.discord = discord;
 }
 
+function formatEventWhen(event) {
+  if (!event || !event.date) return { when: '—', title: '—', notes: '' };
+  const [y, m, d] = event.date.split('-').map(Number);
+  const [hh, mm] = (event.time || '00:00').split(':').map(Number);
+  const eventDate = new Date(Date.UTC(y, m - 1, d, hh, mm));
+
+  const tz = event.timezone || undefined;
+  const dayFmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'long' });
+  const shortDayFmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short' });
+  const monthDayFmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, month: 'short', day: 'numeric' });
+  const timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit' });
+
+  const dayLong = dayFmt.format(eventDate).toUpperCase();
+  const time = timeFmt.format(eventDate).replace(':00', '').toUpperCase();
+  const sixDaysMs = 6 * 24 * 60 * 60 * 1000;
+  const within6Days = (eventDate.getTime() - Date.now()) <= sixDaysMs && (eventDate.getTime() - Date.now()) >= -sixDaysMs;
+
+  let when;
+  if (within6Days) {
+    when = `${dayLong} · ${time}`;
+  } else {
+    when = `${shortDayFmt.format(eventDate).toUpperCase()} · ${monthDayFmt.format(eventDate).toUpperCase()} · ${time}`;
+  }
+
+  return { when, title: event.title || '', notes: event.notes || '' };
+}
+
+function renderHero() {
+  const root = document.getElementById('hero');
+  if (!root) return;
+  const event = state.event;
+  if (!event) {
+    root.innerHTML = '<div class="panel-hero"><div class="when">—</div></div>';
+    return;
+  }
+  const { when, title, notes } = formatEventWhen(event);
+  root.innerHTML = `
+    <div class="panel-hero">
+      <div class="corner-dots">○ ○ ○</div>
+      <div class="transmission-label">⬡ INCOMING TRANSMISSION ⬡</div>
+      <div class="when">${when}</div>
+      <div class="episode-title">${escapeHtml(title)}</div>
+      ${notes ? `<div class="notes">${escapeHtml(notes)}</div>` : ''}
+      <div class="actions">
+        <button id="rsvp-button" class="btn" type="button">★ I'M IN ★</button>
+        <button id="discord-button" class="btn btn-discord" type="button">DISCORD →</button>
+      </div>
+    </div>
+  `;
+  const discordBtn = document.getElementById('discord-button');
+  if (discordBtn) {
+    discordBtn.addEventListener('click', () => {
+      const url = state.discord && state.discord.inviteUrl;
+      if (url) window.open(url, '_blank', 'noopener');
+    });
+  }
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+}
+
 function dismissSplash() {
   const splash = document.getElementById('splash');
   if (!splash || splash.classList.contains('fading')) return;
@@ -62,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   animations.start();
   setupSplash();
   await loadAll();
-  console.log('[state]', state);
+  renderHero();
 });
 
 export { state };
