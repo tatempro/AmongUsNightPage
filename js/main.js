@@ -1,5 +1,6 @@
 import * as animations from './animations.js';
 import * as gallery from './gallery.js';
+import * as audio from './audio.js';
 
 const STORAGE_BOARDED = 'boarded';
 
@@ -169,6 +170,9 @@ function dismissSplash() {
   setTimeout(() => splash.remove(), 700);
   document.getElementById('app').hidden = false;
   document.getElementById('mute-toggle').hidden = false;
+  audio.init();
+  audio.attachToggleButton();
+  audio.playMusic();
 }
 
 function setupSplash() {
