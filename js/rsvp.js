@@ -1,4 +1,5 @@
 import * as audio from './audio.js';
+import { WEBHOOK_URL } from './config.js';
 
 const GUEST_COLORS = [
   '#ff4747', '#5b8dff', '#3eff7a', '#ffe94c',
@@ -120,4 +121,71 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, (c) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   })[c]);
+}
+
+export async function submitRsvp({ name, color, episode, eventTitle }) {
+  const button = document.getElementById('rsvp-button');
+  setButtonState(button, 'transmitting');
+  const content = `🚀 ${name} is in for ${eventTitle || 'Among Us Night'}`;
+  try {
+    if (!WEBHOOK_URL || WEBHOOK_URL === '__WEBHOOK_URL__') {
+      throw new Error('webhook URL not configured');
+    }
+    const res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content })
+    });
+    if (!res.ok) throw new Error(`status ${res.status}`);
+    onSubmitSuccess(button, episode);
+  } catch (err) {
+    console.warn('[rsvp]', err.message);
+    onSubmitFailure(button);
+  }
+}
+
+function setButtonState(button, state) {
+  if (!button) return;
+  if (state === 'transmitting') {
+    button.disabled = true;
+    button.textContent = 'TRANSMITTING…';
+  } else if (state === 'sent') {
+    button.disabled = true;
+    button.textContent = 'TRANSMISSION SENT ✓';
+  } else if (state === 'failed') {
+    button.disabled = false;
+    button.textContent = 'TRANSMISSION FAILED — open Discord';
+  }
+}
+
+function onSubmitSuccess(button, episode) {
+  setButtonState(button, 'sent');
+  fireEmergencyFlash();
+  audio.playSfx('rsvp');
+  if (episode != null) {
+    try { localStorage.setItem(`rsvp_sent_${episode}`, 'true'); } catch {}
+  }
+}
+
+function onSubmitFailure(button) {
+  setButtonState(button, 'failed');
+  const discordBtn = document.getElementById('discord-button');
+  if (discordBtn) {
+    discordBtn.style.boxShadow = '0 0 24px rgba(88, 101, 242, 0.9)';
+  }
+}
+
+function fireEmergencyFlash() {
+  const overlay = document.getElementById('flash-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('firing');
+  // Reflow so animation restarts when class re-added
+  void overlay.offsetWidth;
+  overlay.classList.add('firing');
+  overlay.addEventListener('animationend', () => overlay.classList.remove('firing'), { once: true });
+}
+
+export function isAlreadySent(episode) {
+  if (episode == null) return false;
+  try { return localStorage.getItem(`rsvp_sent_${episode}`) === 'true'; } catch { return false; }
 }

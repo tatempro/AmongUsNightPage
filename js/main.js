@@ -100,6 +100,10 @@ function renderHero() {
       rsvp.openChooser(state.crew || []);
     });
   }
+  if (state.event && rsvp.isAlreadySent(state.event.episode)) {
+    const b = document.getElementById('rsvp-button');
+    if (b) { b.disabled = true; b.textContent = 'TRANSMISSION SENT ✓'; }
+  }
 }
 
 function escapeHtml(str) {
@@ -233,7 +237,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   wireSfx();
   rsvp.init({
     onSubmit: ({ name, color }) => {
-      console.log('[rsvp] submit', { name, color });
+      const ev = state.event || {};
+      rsvp.submitRsvp({
+        name,
+        color,
+        episode: ev.episode,
+        eventTitle: ev.title
+      });
     }
   });
   await loadAll();
