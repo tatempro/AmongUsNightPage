@@ -35,7 +35,7 @@ export function init() {
   }
 
   state.music = new Howl({
-    src: ['assets/audio/music.mp3'],
+    src: ['assets/audio/music.ogg'],
     loop: true,
     volume: 0,
     html5: true,
@@ -43,9 +43,9 @@ export function init() {
   });
 
   state.sfx = {
-    hover: new Howl({ src: ['assets/audio/hover.mp3'], volume: 0.3, onloaderror: noop }),
-    click: new Howl({ src: ['assets/audio/click.mp3'], volume: 0.4, onloaderror: noop }),
-    rsvp:  new Howl({ src: ['assets/audio/rsvp.mp3'],  volume: 0.5, onloaderror: noop }),
+    hover: new Howl({ src: ['assets/audio/hover.ogg'], volume: 0.3, onloaderror: noop }),
+    click: new Howl({ src: ['assets/audio/click.ogg'], volume: 0.4, onloaderror: noop }),
+    rsvp:  new Howl({ src: ['assets/audio/rsvp.ogg'],  volume: 0.5, onloaderror: noop }),
   };
 
   applyMute();

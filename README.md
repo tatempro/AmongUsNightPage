@@ -89,13 +89,15 @@ See [the design spec](docs/superpowers/specs/2026-04-24-among-us-night-page-desi
 
 ## Audio assets
 
-Drop CC0 / royalty-free audio in `assets/audio/`:
+Files in `assets/audio/` (Howler accepts `.ogg`/`.mp3`/`.wav` — match the extension to what's in `js/audio.js`):
 
-- `music.mp3` — looping ambient track (~1–2 min)
-- `hover.mp3` — short blip
-- `click.mp3` — confirmation blip
-- `rsvp.mp3` — alert/alarm
+- `music.ogg` — looping ambient track (~1–2 min)
+- `hover.ogg` — short blip
+- `click.ogg` — confirmation blip
+- `rsvp.ogg` — alert/alarm
 
-Sources: [freesound.org](https://freesound.org), [pixabay.com/sound-effects](https://pixabay.com/sound-effects).
+Current files are sourced from [50 CC0 Sci-Fi SFX](https://opengameart.org/content/50-cc0-sci-fi-sfx) on OpenGameArt (CC0, no attribution required). To swap any of them, drop a replacement at the same path with the same extension and push.
+
+Other CC0 sources: [freesound.org](https://freesound.org) (filter "License: CC0"), [pixabay.com/sound-effects](https://pixabay.com/sound-effects).
 
 The page works without audio — Howler silently fails on missing files.
