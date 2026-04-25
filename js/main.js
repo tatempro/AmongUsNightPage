@@ -217,15 +217,21 @@ function setupSplash() {
 }
 
 function wireSfx() {
+  let currentHover = null;
   document.addEventListener('mouseover', (e) => {
     const target = e.target.closest('button, .crew-tile, .thumb, a');
-    if (!target) return;
-    if (target.dataset.sfxHover === 'wired') return;
-    target.dataset.sfxHover = 'wired';
-    target.addEventListener('mouseenter', () => audio.playSfx('hover'));
+    if (!target || target === currentHover) return;
+    currentHover = target;
+    audio.playSfx('hover');
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (!currentHover) return;
+    if (!e.relatedTarget || !currentHover.contains(e.relatedTarget)) {
+      currentHover = null;
+    }
   });
   document.addEventListener('click', (e) => {
-    const target = e.target.closest('button, .crew-tile, .thumb');
+    const target = e.target.closest('button, .crew-tile, .thumb, a');
     if (!target) return;
     audio.playSfx('click');
   });
