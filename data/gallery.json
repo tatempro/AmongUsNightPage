@@ -2,8 +2,11 @@
   {
     "date": "2026-04-15",
     "title": "Night #06 — Polus chaos",
-    "cover": "",
-    "photos": [],
+    "cover": "https://picsum.photos/seed/aun06/800/600",
+    "photos": [
+      "https://picsum.photos/seed/aun06b/800/600",
+      "https://picsum.photos/seed/aun06c/800/600"
+    ],
     "note": "Riley got ejected three times in a row."
   }
 ]

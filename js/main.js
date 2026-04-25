@@ -1,4 +1,5 @@
 import * as animations from './animations.js';
+import * as gallery from './gallery.js';
 
 const STORAGE_BOARDED = 'boarded';
 
@@ -191,6 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderRoster();
   renderDiscord();
   renderPastNights();
+  gallery.mount(state.gallery);
 });
 
 export { state };

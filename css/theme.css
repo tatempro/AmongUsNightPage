@@ -264,3 +264,73 @@ button.btn-discord {
   color: var(--text-dim);
   font-style: italic;
 }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: 0;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.lightbox-title {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-controls {
+  margin-top: 16px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  color: white;
+}
+
+.lightbox-controls button {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  font-size: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.lightbox-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.lightbox-note {
+  color: var(--text-dim);
+  font-size: 13px;
+  font-style: italic;
+  margin-top: 12px;
+  max-width: 600px;
+  text-align: center;
+}
