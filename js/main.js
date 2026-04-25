@@ -99,6 +99,28 @@ function escapeHtml(str) {
   })[c]);
 }
 
+function renderRoster() {
+  const root = document.getElementById('roster');
+  if (!root) return;
+  const crew = Array.isArray(state.crew) ? state.crew : [];
+
+  root.innerHTML = `
+    <div class="panel-label">CREW ROSTER</div>
+    <div class="roster-grid">
+      ${crew.map((c, i) => `
+        <button class="crew-tile" data-crew-index="${i}" type="button">
+          <div class="swatch" style="background:${escapeHtml(c.color)}"></div>
+          <div class="name">${escapeHtml(c.name)}</div>
+        </button>
+      `).join('')}
+      <button class="crew-tile you" id="crew-you" type="button">
+        <div class="swatch"></div>
+        <div class="name">+ you</div>
+      </button>
+    </div>
+  `;
+}
+
 function dismissSplash() {
   const splash = document.getElementById('splash');
   if (!splash || splash.classList.contains('fading')) return;
@@ -127,6 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupSplash();
   await loadAll();
   renderHero();
+  renderRoster();
 });
 
 export { state };
